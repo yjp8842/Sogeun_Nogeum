@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import audioList from "../data/audioList.json";
+import nameList from "../data/nameList.json";
 
 export default function AudioComp() {
   const { name } = useParams();
@@ -8,7 +8,7 @@ export default function AudioComp() {
   const videoRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const audio = audioList.find((item) => item.name === name);
+  const matched = nameList.find((item) => item.url === name);
 
   const handlePlay = () => {
     if (!videoRef.current || isPlaying) return;
@@ -17,7 +17,7 @@ export default function AudioComp() {
     setIsPlaying(true);
   };
 
-  if (!audio) {
+  if (!matched) {
     return (
       <div style={{ textAlign: "center", fontSize: "18px" }}>
         <p>해당 이름의 영상이 없습니다.</p>
@@ -29,7 +29,10 @@ export default function AudioComp() {
   return (
     <div onClick={handlePlay} style={{ width: "100vw", height: "100vh" }}>
       <video ref={videoRef} playsInline className="fullscreen-video">
-        <source src={audio.video} type="video/mp4" />
+        <source
+          src={`https://3scpvbuliuujwpkj.public.blob.vercel-storage.com/${matched}.mp4`}
+          type="video/mp4"
+        />
       </video>
 
       {!isPlaying && (
