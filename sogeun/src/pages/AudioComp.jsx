@@ -8,7 +8,7 @@ export default function AudioComp() {
   const videoRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const matched = nameList.find((item) => item.url === name);
+  const matched = nameList.find((item) => item.name === name).url;
 
   const handlePlay = () => {
     if (!videoRef.current || isPlaying) return;
